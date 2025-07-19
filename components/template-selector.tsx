@@ -48,20 +48,13 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
               onClick={() => onSelect(template.id)}
             >
               <div className="p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0">
-                    <img
-                      src={template.preview || "/placeholder.svg"}
-                      alt={template.name}
-                      className="w-12 h-16 object-cover rounded border border-gray-200"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 mb-1">
-                      {template.icon}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {template.icon}
+                    <div>
                       <h4 className="font-medium text-gray-900">{template.name}</h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">{template.description}</p>
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">{template.description}</p>
                   </div>
                   {selected === template.id && <Check className="h-5 w-5 text-olive-500 flex-shrink-0" />}
                 </div>
