@@ -417,8 +417,8 @@ export default function SignupPage() {
       {/* Footer */}
       <footer className="mt-auto w-full bg-gray-100 py-4 text-center">
         <p className="text-sm text-gray-500">
-          © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Aanshuman
-          Panigrahi and Piyush Priyabrata Mishra.
+          © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Piyush Priyabrata
+          Mishra and Aanshuman Panigrahi.
         </p>
       </footer>
     </div>

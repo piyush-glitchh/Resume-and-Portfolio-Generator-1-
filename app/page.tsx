@@ -156,6 +156,7 @@ export default function HomePage() {
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+                <div className="aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-200 rounded-t-lg"></div>
                 <CardHeader>
                   <CardTitle className="text-gray-900">Professional</CardTitle>
                   <CardDescription>
@@ -164,6 +165,7 @@ export default function HomePage() {
                 </CardHeader>
               </Card>
               <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+                <div className="aspect-[3/4] bg-gradient-to-br from-olive-100 to-olive-200 rounded-t-lg"></div>
                 <CardHeader>
                   <CardTitle className="text-gray-900">Creative</CardTitle>
                   <CardDescription>
@@ -172,6 +174,7 @@ export default function HomePage() {
                 </CardHeader>
               </Card>
               <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+                <div className="aspect-[3/4] bg-gradient-to-br from-blue-100 to-blue-200 rounded-t-lg"></div>
                 <CardHeader>
                   <CardTitle className="text-gray-900">Minimal</CardTitle>
                   <CardDescription>
@@ -203,8 +206,8 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gray-100 py-4 text-center">
         <p className="text-sm text-gray-500">
-          © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Aanshuman
-          Panigrahi and Piyush Priyabrata Mishra.
+          © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Piyush Priyabrata
+          Mishra and Aanshuman Panigrahi.
         </p>
       </footer>
     </div>
