@@ -60,13 +60,21 @@ export default function BuilderPage() {
     const savedCustomization = localStorage.getItem("folium-customization")
 
     if (savedData) {
-      setResumeData(JSON.parse(savedData))
+      try {
+        setResumeData(JSON.parse(savedData))
+      } catch (error) {
+        console.error("Error parsing saved data:", error)
+      }
     }
     if (savedTemplate) {
       setSelectedTemplate(savedTemplate as Template)
     }
     if (savedCustomization) {
-      setCustomization(JSON.parse(savedCustomization))
+      try {
+        setCustomization(JSON.parse(savedCustomization))
+      } catch (error) {
+        console.error("Error parsing saved customization:", error)
+      }
     }
   }, [])
 
@@ -102,7 +110,7 @@ export default function BuilderPage() {
 
   if (showPreview) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
         <div className="border-b border-gray-200 bg-white sticky top-0 z-50 no-print">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Button variant="ghost" onClick={() => setShowPreview(false)} className="flex items-center">
@@ -114,15 +122,22 @@ export default function BuilderPage() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 py-8 print:p-0 print:m-0">
+        <div className="flex-1 container mx-auto px-4 py-8 print:p-0 print:m-0">
           <ResumePreview data={resumeData} template={selectedTemplate} customization={customization} />
         </div>
+        {/* Footer */}
+        <footer className="bg-gray-100 py-4 text-center no-print">
+          <p className="text-sm text-gray-500">
+            © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Aanshuman
+            Panigrahi and Piyush Priyabrata Mishra.
+          </p>
+        </footer>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
       <header className="border-b border-gray-200 bg-white sticky top-0 z-50 no-print">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -140,7 +155,7 @@ export default function BuilderPage() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 no-print">
+      <div className="flex-1 container mx-auto px-4 py-8 no-print">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Form Section */}
           <div className="lg:col-span-2 no-print">
@@ -216,6 +231,14 @@ export default function BuilderPage() {
       <div className="hidden print:block">
         <ResumePreview data={resumeData} template={selectedTemplate} customization={customization} />
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 py-4 text-center no-print">
+        <p className="text-sm text-gray-500">
+          © 2025 Folium. All rights reserved. This domain and its content are owned and maintained by Aanshuman
+          Panigrahi and Piyush Priyabrata Mishra.
+        </p>
+      </footer>
     </div>
   )
 }
