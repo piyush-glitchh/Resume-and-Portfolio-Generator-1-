@@ -5,6 +5,7 @@ export interface PersonalInfo {
   email: string
   phone: string
   location: string
+  photo?: string
 }
 
 export interface Education {
@@ -80,5 +81,4 @@ export type Template = "professional" | "minimal" | "creative"
 export interface CustomizationOptions {
   primaryColor: string
   fontFamily: "Inter" | "Poppins" | "Fira Sans" | "DM Sans"
-  layout: "single-column" | "two-column"
 }

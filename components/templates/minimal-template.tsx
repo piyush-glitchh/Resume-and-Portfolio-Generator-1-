@@ -1,7 +1,7 @@
 "use client"
 
 import type { ResumeData, CustomizationOptions } from "@/lib/types"
-import { Mail, Phone, MapPin, Linkedin, Github, Globe } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Github, Globe, ExternalLink } from "lucide-react"
 
 interface MinimalTemplateProps {
   data: ResumeData
@@ -32,23 +32,36 @@ export function MinimalTemplate({ data, customization }: MinimalTemplateProps) {
     <div className="min-h-[11in] p-12 space-y-12 text-gray-800">
       {/* Header */}
       <div className="space-y-4">
-        <h1 className="text-5xl font-light tracking-wide">{personalInfo.name}</h1>
-        <div className="w-16 h-px" style={{ backgroundColor: primaryColor }}></div>
-        <h2 className="text-xl font-light text-gray-600">{personalInfo.role}</h2>
+        <div className="flex items-center space-x-8">
+          {personalInfo.photo && (
+            <div className="flex-shrink-0">
+              <img
+                src={personalInfo.photo || "/placeholder.svg"}
+                alt={personalInfo.name}
+                className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+              />
+            </div>
+          )}
+          <div className="flex-1">
+            <h1 className="text-5xl font-light tracking-wide">{personalInfo.name}</h1>
+            <div className="w-16 h-px mt-2" style={{ backgroundColor: primaryColor }}></div>
+            <h2 className="text-xl font-light text-gray-600 mt-2">{personalInfo.role}</h2>
+          </div>
+        </div>
 
         {/* Contact */}
         <div className="flex flex-wrap gap-6 text-sm text-gray-600">
           {contact.email && (
-            <div className="flex items-center space-x-2">
+            <a href={`mailto:${contact.email}`} className="flex items-center space-x-2 hover:underline">
               <Mail className="h-3 w-3" />
               <span>{contact.email}</span>
-            </div>
+            </a>
           )}
           {contact.phone && (
-            <div className="flex items-center space-x-2">
+            <a href={`tel:${contact.phone}`} className="flex items-center space-x-2 hover:underline">
               <Phone className="h-3 w-3" />
               <span>{contact.phone}</span>
-            </div>
+            </a>
           )}
           {personalInfo.location && (
             <div className="flex items-center space-x-2">
@@ -57,22 +70,37 @@ export function MinimalTemplate({ data, customization }: MinimalTemplateProps) {
             </div>
           )}
           {contact.linkedin && (
-            <div className="flex items-center space-x-2">
+            <a
+              href={contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 hover:underline"
+            >
               <Linkedin className="h-3 w-3" />
               <span>LinkedIn</span>
-            </div>
+            </a>
           )}
           {contact.github && (
-            <div className="flex items-center space-x-2">
+            <a
+              href={contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 hover:underline"
+            >
               <Github className="h-3 w-3" />
               <span>GitHub</span>
-            </div>
+            </a>
           )}
           {contact.website && (
-            <div className="flex items-center space-x-2">
+            <a
+              href={contact.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 hover:underline"
+            >
               <Globe className="h-3 w-3" />
               <span>Website</span>
-            </div>
+            </a>
           )}
         </div>
 
@@ -155,7 +183,21 @@ export function MinimalTemplate({ data, customization }: MinimalTemplateProps) {
           <div className="space-y-6">
             {projects.map((project) => (
               <div key={project.id} className="space-y-2">
-                <h3 className="text-lg font-medium">{project.name}</h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">{project.name}</h3>
+                  <div className="flex space-x-2">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-4 w-4 text-gray-600 hover:text-gray-800" />
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4 text-gray-600 hover:text-gray-800" />
+                      </a>
+                    )}
+                  </div>
+                </div>
                 {project.description && (
                   <p className="text-gray-700 font-light leading-relaxed">{project.description}</p>
                 )}
@@ -218,6 +260,17 @@ export function MinimalTemplate({ data, customization }: MinimalTemplateProps) {
                   {blog.platform} • {formatDate(blog.publishDate)}
                 </p>
                 {blog.description && <p className="text-gray-700 font-light text-sm mt-1">{blog.description}</p>}
+                {blog.url && (
+                  <a
+                    href={blog.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mt-2 text-sm font-medium hover:underline"
+                    style={{ color: primaryColor }}
+                  >
+                    Read Article <ExternalLink className="ml-1 h-3 w-3" />
+                  </a>
+                )}
               </div>
             ))}
           </div>

@@ -26,7 +26,7 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#3B82F6",
+          DEFAULT: "#6B7280",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -52,6 +52,30 @@ const config: Config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        olive: {
+          50: "#f7f8f0",
+          100: "#eef0e0",
+          200: "#dde2c2",
+          300: "#c8d19e",
+          400: "#b4c17d",
+          500: "#9db060",
+          600: "#7a8a4a",
+          700: "#5f6b3a",
+          800: "#4d5530",
+          900: "#42482a",
+        },
+        gray: {
+          50: "#f9fafb",
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          300: "#d1d5db",
+          400: "#9ca3af",
+          500: "#6b7280",
+          600: "#4b5563",
+          700: "#374151",
+          800: "#1f2937",
+          900: "#111827",
         },
       },
       borderRadius: {

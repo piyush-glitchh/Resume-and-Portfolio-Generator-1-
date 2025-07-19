@@ -28,6 +28,7 @@ export default function BuilderPage() {
       email: "",
       phone: "",
       location: "",
+      photo: "",
     },
     education: [],
     experience: [],
@@ -46,18 +47,17 @@ export default function BuilderPage() {
 
   const [selectedTemplate, setSelectedTemplate] = useState<Template>("professional")
   const [customization, setCustomization] = useState<CustomizationOptions>({
-    primaryColor: "#3B82F6",
+    primaryColor: "#7a8a4a",
     fontFamily: "Inter",
-    layout: "single-column",
   })
   const [showPreview, setShowPreview] = useState(false)
   const [activeTab, setActiveTab] = useState("personal")
 
   // Load data from localStorage on mount
   useEffect(() => {
-    const savedData = localStorage.getItem("swiftfolio-resume-data")
-    const savedTemplate = localStorage.getItem("swiftfolio-template")
-    const savedCustomization = localStorage.getItem("swiftfolio-customization")
+    const savedData = localStorage.getItem("folium-resume-data")
+    const savedTemplate = localStorage.getItem("folium-template")
+    const savedCustomization = localStorage.getItem("folium-customization")
 
     if (savedData) {
       setResumeData(JSON.parse(savedData))
@@ -72,15 +72,15 @@ export default function BuilderPage() {
 
   // Save data to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("swiftfolio-resume-data", JSON.stringify(resumeData))
+    localStorage.setItem("folium-resume-data", JSON.stringify(resumeData))
   }, [resumeData])
 
   useEffect(() => {
-    localStorage.setItem("swiftfolio-template", selectedTemplate)
+    localStorage.setItem("folium-template", selectedTemplate)
   }, [selectedTemplate])
 
   useEffect(() => {
-    localStorage.setItem("swiftfolio-customization", JSON.stringify(customization))
+    localStorage.setItem("folium-customization", JSON.stringify(customization))
   }, [customization])
 
   const updateResumeData = (section: keyof ResumeData, data: any) => {
@@ -103,13 +103,15 @@ export default function BuilderPage() {
   if (showPreview) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white sticky top-0 z-50 no-print">
+        <div className="border-b border-gray-200 bg-white sticky top-0 z-50 no-print">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Button variant="ghost" onClick={() => setShowPreview(false)} className="flex items-center">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Editor
             </Button>
-            <ExportPanel resumeData={resumeData} template={selectedTemplate} customization={customization} />
+            <div className="flex items-center space-x-2">
+              <ExportPanel resumeData={resumeData} template={selectedTemplate} customization={customization} />
+            </div>
           </div>
         </div>
         <div className="container mx-auto px-4 py-8 print:p-0 print:m-0">
@@ -122,11 +124,11 @@ export default function BuilderPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="border-b bg-white sticky top-0 z-50 no-print">
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-50 no-print">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <ArrowLeft className="h-5 w-5" />
-            <span className="font-semibold">Swiftfolio</span>
+            <span className="font-semibold">Folium</span>
           </Link>
           <div className="flex items-center space-x-2">
             <Button variant="outline" onClick={() => setShowPreview(true)} className="flex items-center">
@@ -142,15 +144,19 @@ export default function BuilderPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Form Section */}
           <div className="lg:col-span-2 no-print">
-            <Card>
+            <Card className="border-gray-200">
               <CardHeader>
-                <CardTitle>Build Your Resume</CardTitle>
+                <CardTitle className="text-gray-900">Build Your Resume</CardTitle>
               </CardHeader>
               <CardContent>
                 <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid grid-cols-4 lg:grid-cols-7 mb-6">
+                  <TabsList className="grid grid-cols-4 lg:grid-cols-7 mb-6 bg-gray-100">
                     {tabs.map((tab) => (
-                      <TabsTrigger key={tab.id} value={tab.id} className="text-xs">
+                      <TabsTrigger
+                        key={tab.id}
+                        value={tab.id}
+                        className="text-xs data-[state=active]:bg-olive-600 data-[state=active]:text-white"
+                      >
                         <span className="mr-1">{tab.icon}</span>
                         <span className="hidden sm:inline">{tab.label}</span>
                       </TabsTrigger>

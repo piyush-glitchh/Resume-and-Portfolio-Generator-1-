@@ -1,9 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ResumePreview } from "@/components/resume-preview"
-import { ExportPanel } from "@/components/export-panel"
 import type { ResumeData, Template, CustomizationOptions } from "@/lib/types"
+import { ResumePreview } from "@/components/resume-preview"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, FileText } from "lucide-react"
 import Link from "next/link"
@@ -13,6 +12,7 @@ interface SharedResume {
   template: Template
   customization: CustomizationOptions
   createdAt: string
+  type: string
 }
 
 export default function PreviewPage({ params }: { params: { id: string } }) {
@@ -22,7 +22,22 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const loadSharedResume = () => {
       try {
-        const savedData = localStorage.getItem(`shared-resume-${params.id}`)
+        // Try multiple possible keys for backward compatibility
+        const possibleKeys = [
+          `folium-shared-${params.id}`,
+          `shared-resume-${params.id}`,
+          `folium-portfolio-${params.id}`,
+        ]
+
+        let savedData = null
+        for (const key of possibleKeys) {
+          const data = localStorage.getItem(key)
+          if (data) {
+            savedData = data
+            break
+          }
+        }
+
         if (savedData) {
           const parsed = JSON.parse(savedData)
           setResumeData(parsed)
@@ -41,7 +56,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-olive-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading resume...</p>
         </div>
       </div>
@@ -56,7 +71,7 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Resume Not Found</h1>
           <p className="text-gray-600 mb-6">The resume you're looking for doesn't exist or may have been removed.</p>
           <Link href="/">
-            <Button>
+            <Button className="bg-olive-600 hover:bg-olive-700 text-white">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Go Home
             </Button>
@@ -68,44 +83,22 @@ export default function PreviewPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="border-b bg-white sticky top-0 z-50 no-print">
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-50 no-print">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <FileText className="h-6 w-6 text-blue-600" />
-              <span className="font-semibold">Swiftfolio</span>
-            </Link>
-            <div className="text-sm text-gray-500">Shared Resume • {resumeData.data.personalInfo.name}</div>
-          </div>
           <div className="flex items-center space-x-2">
-            <Link href="/builder">
-              <Button variant="outline">Create Your Own</Button>
-            </Link>
-            <ExportPanel
-              resumeData={resumeData.data}
-              template={resumeData.template}
-              customization={resumeData.customization}
-            />
+            <FileText className="h-6 w-6 text-olive-600" />
+            <span className="font-semibold">Folium Resume</span>
           </div>
-        </div>
-      </div>
-
-      {/* Resume Preview */}
-      <div className="container mx-auto px-4 py-8">
-        <ResumePreview data={resumeData.data} template={resumeData.template} customization={resumeData.customization} />
-      </div>
-
-      {/* Footer */}
-      <div className="border-t bg-white mt-12 no-print">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <p className="text-gray-600 mb-4">Create your own professional resume with Swiftfolio</p>
-          <Link href="/builder">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-              Get Started Free
+          <Link href="/">
+            <Button variant="outline" className="border-olive-300 text-olive-700 hover:bg-olive-50 bg-transparent">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Create Your Own
             </Button>
           </Link>
         </div>
+      </div>
+      <div className="container mx-auto px-4 py-8 print:p-0 print:m-0">
+        <ResumePreview data={resumeData.data} template={resumeData.template} customization={resumeData.customization} />
       </div>
     </div>
   )

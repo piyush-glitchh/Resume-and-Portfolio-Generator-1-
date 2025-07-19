@@ -47,52 +47,85 @@ export function CreativeTemplate({ data, customization }: CreativeTemplateProps)
           style={{ backgroundColor: "white" }}
         ></div>
 
-        <div className="relative z-10">
-          <h1 className="text-5xl font-bold mb-2">{personalInfo.name}</h1>
-          <h2 className="text-2xl font-light mb-6 opacity-90">{personalInfo.role}</h2>
-
-          {personalInfo.summary && (
-            <p className="text-lg leading-relaxed max-w-3xl mb-8 opacity-95">{personalInfo.summary}</p>
+        <div className="relative z-10 flex items-center space-x-8">
+          {personalInfo.photo && (
+            <div className="flex-shrink-0">
+              <img
+                src={personalInfo.photo || "/placeholder.svg"}
+                alt={personalInfo.name}
+                className="w-32 h-32 rounded-full object-cover border-4 border-white/30 shadow-lg"
+              />
+            </div>
           )}
 
-          {/* Contact */}
-          <div className="flex flex-wrap gap-6 text-sm">
-            {contact.email && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <Mail className="h-4 w-4" />
-                <span>{contact.email}</span>
-              </div>
+          <div className="flex-1">
+            <h1 className="text-5xl font-bold mb-2">{personalInfo.name}</h1>
+            <h2 className="text-2xl font-light mb-6 opacity-90">{personalInfo.role}</h2>
+
+            {personalInfo.summary && (
+              <p className="text-lg leading-relaxed max-w-3xl mb-8 opacity-95">{personalInfo.summary}</p>
             )}
-            {contact.phone && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <Phone className="h-4 w-4" />
-                <span>{contact.phone}</span>
-              </div>
-            )}
-            {personalInfo.location && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <MapPin className="h-4 w-4" />
-                <span>{personalInfo.location}</span>
-              </div>
-            )}
-            {contact.linkedin && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <Linkedin className="h-4 w-4" />
-                <span>LinkedIn</span>
-              </div>
-            )}
-            {contact.github && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <Github className="h-4 w-4" />
-                <span>GitHub</span>
-              </div>
-            )}
-            {contact.website && (
-              <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
-                <Globe className="h-4 w-4" />
-                <span>Website</span>
-              </div>
-            )}
+
+            {/* Contact */}
+            <div className="flex flex-wrap gap-6 text-sm">
+              {contact.email && (
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-colors"
+                >
+                  <Mail className="h-4 w-4" />
+                  <span>{contact.email}</span>
+                </a>
+              )}
+              {contact.phone && (
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-colors"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>{contact.phone}</span>
+                </a>
+              )}
+              {personalInfo.location && (
+                <div className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full">
+                  <MapPin className="h-4 w-4" />
+                  <span>{personalInfo.location}</span>
+                </div>
+              )}
+              {contact.linkedin && (
+                <a
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-colors"
+                >
+                  <Linkedin className="h-4 w-4" />
+                  <span>LinkedIn</span>
+                </a>
+              )}
+              {contact.github && (
+                <a
+                  href={contact.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-colors"
+                >
+                  <Github className="h-4 w-4" />
+                  <span>GitHub</span>
+                </a>
+              )}
+              {contact.website && (
+                <a
+                  href={contact.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-colors"
+                >
+                  <Globe className="h-4 w-4" />
+                  <span>Website</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -192,14 +225,26 @@ export function CreativeTemplate({ data, customization }: CreativeTemplateProps)
                     <h3 className="text-xl font-bold">{project.name}</h3>
                     <div className="flex space-x-2">
                       {project.githubUrl && (
-                        <div className="p-2 rounded-full" style={{ backgroundColor: `${primaryColor}20` }}>
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                          style={{ backgroundColor: `${primaryColor}20` }}
+                        >
                           <Github className="h-4 w-4" style={{ color: primaryColor }} />
-                        </div>
+                        </a>
                       )}
                       {project.liveUrl && (
-                        <div className="p-2 rounded-full" style={{ backgroundColor: `${primaryColor}20` }}>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                          style={{ backgroundColor: `${primaryColor}20` }}
+                        >
                           <ExternalLink className="h-4 w-4" style={{ color: primaryColor }} />
-                        </div>
+                        </a>
                       )}
                     </div>
                   </div>
@@ -273,6 +318,17 @@ export function CreativeTemplate({ data, customization }: CreativeTemplateProps)
                     {blog.platform} • {formatDate(blog.publishDate)}
                   </p>
                   {blog.description && <p className="text-gray-700">{blog.description}</p>}
+                  {blog.url && (
+                    <a
+                      href={blog.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center mt-3 text-sm font-medium hover:underline"
+                      style={{ color: primaryColor }}
+                    >
+                      Read Article <ExternalLink className="ml-1 h-3 w-3" />
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

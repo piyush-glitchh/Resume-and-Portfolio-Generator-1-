@@ -1,9 +1,9 @@
 "use client"
 
 import type { ResumeData, Template, CustomizationOptions } from "@/lib/types"
-import { ProfessionalTemplate } from "@/components/templates/professional-template"
-import { MinimalTemplate } from "@/components/templates/minimal-template"
-import { CreativeTemplate } from "@/components/templates/creative-template"
+import { ProfessionalTemplate } from "./templates/professional-template"
+import { MinimalTemplate } from "./templates/minimal-template"
+import { CreativeTemplate } from "./templates/creative-template"
 
 interface ResumePreviewProps {
   data: ResumeData
@@ -12,6 +12,21 @@ interface ResumePreviewProps {
 }
 
 export function ResumePreview({ data, template, customization }: ResumePreviewProps) {
+  const getFontClass = (fontFamily: string) => {
+    switch (fontFamily) {
+      case "Inter":
+        return "font-inter"
+      case "Poppins":
+        return "font-poppins"
+      case "Fira Sans":
+        return "font-fira-sans"
+      case "DM Sans":
+        return "font-dm-sans"
+      default:
+        return "font-inter"
+    }
+  }
+
   const renderTemplate = () => {
     const props = { data, customization }
 
@@ -28,23 +43,8 @@ export function ResumePreview({ data, template, customization }: ResumePreviewPr
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div
-        id="resume-preview"
-        className={`bg-white shadow-lg print:shadow-none print:m-0 print:p-0 ${
-          customization.fontFamily === "Inter"
-            ? "font-inter"
-            : customization.fontFamily === "Poppins"
-              ? "font-poppins"
-              : customization.fontFamily === "Fira Sans"
-                ? "font-fira-sans"
-                : customization.fontFamily === "DM Sans"
-                  ? "font-dm-sans"
-                  : "font-sans"
-        }`}
-      >
-        {renderTemplate()}
-      </div>
+    <div id="resume-preview" className={`${getFontClass(customization.fontFamily)} bg-white shadow-lg`}>
+      {renderTemplate()}
     </div>
   )
 }
